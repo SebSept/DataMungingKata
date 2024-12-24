@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App;
+namespace App\Temperature;
 
-final class WeatherTableFactory
+final class DataTableFactory
 {
     public const string SEPARATOR = ' ';
 
-    public static function fromArray(array $data): WeatherDataTable
+    public static function fromArray(array $data): DataTable
     {
         // remove empty fields
         $dataLines = array_map(array_filter(...), $data);
@@ -21,16 +21,16 @@ final class WeatherTableFactory
             fn(array $line): bool => $number_between_1_and_30($line[0])
         );
 
-        return new WeatherDataTable(
+        return new DataTable(
             ...array_map(
-                fn(array $dataLine): WeatherDataLine =>
+                fn(array $dataLine): DataLine =>
                     //                    var_dump($dataLine);
-                    new WeatherDataLine((int)$dataLine[0], $dataLine[1], $dataLine[2]),
+                    new DataLine((int)$dataLine[0], $dataLine[1], $dataLine[2]),
         $dataLines)
         );
     }
 
-    public static function fromFile(string $filePath): WeatherDataTable
+    public static function fromFile(string $filePath): DataTable
     {
         $fileStream = fopen($filePath, 'r');
         $lines = [];

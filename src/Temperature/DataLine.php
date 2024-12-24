@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App;
+namespace App\Temperature;
 
 use InvalidArgumentException;
 
-readonly class WeatherDataLine
+readonly class DataLine
 {
     public int $maxTemperature;
 

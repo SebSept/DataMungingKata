@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Temperature;
 
-use App\DataMunging;
-use App\WeatherTableFactory;
+use App\Temperature\Munging;
+use App\Temperature\DataTableFactory;
 use PHPUnit\Framework\TestCase;
 
-class DataMungingTest extends TestCase
+class TemperatureMungingTest extends TestCase
 {
 
     /**
@@ -14,7 +14,7 @@ class DataMungingTest extends TestCase
      */
     public function testMinimalTemperatureSpreadDay(): void
     {
-        $dataMunging = new DataMunging(WeatherTableFactory::fromFile(__DIR__ . '/stubs/weather.dat'));
+        $dataMunging = new Munging(DataTableFactory::fromFile(__DIR__ . '/stubs/weather.dat'));
         $this->assertSame(14, $dataMunging->minimalTemperatureSpreadDay());
     }
 }

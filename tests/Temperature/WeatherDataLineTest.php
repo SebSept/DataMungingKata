@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Temperature;
 
+use App\Temperature\DataLine;
 use InvalidArgumentException;
-use App\WeatherDataLine;
 use PHPUnit\Framework\TestCase;
 
 class WeatherDataLineTest extends TestCase
@@ -13,7 +13,7 @@ class WeatherDataLineTest extends TestCase
      */
     public function testSpreadWithPositiveTemperatures(): void
     {
-        $weatherDataLine = new WeatherDataLine(1, 30, 20);
+        $weatherDataLine = new DataLine(1, 30, 20);
         $this->assertSame(10, $weatherDataLine->spread());
     }
 
@@ -22,10 +22,10 @@ class WeatherDataLineTest extends TestCase
      */
     public function testSpreadWithNegativeTemperatures(): void
     {
-        $wdl = new WeatherDataLine(1, 5, -5);
+        $wdl = new DataLine(1, 5, -5);
         $this->assertSame(10, $wdl->spread());
 
-        $wdl = new WeatherDataLine(1, -2, -12);
+        $wdl = new DataLine(1, -2, -12);
         $this->assertSame(10, $wdl->spread());
     }
 
@@ -35,10 +35,10 @@ class WeatherDataLineTest extends TestCase
      */
     public function testSpreadWithAsteriskTemperature(): void
     {
-        $wdl = new WeatherDataLine(9, 86, "32*");
+        $wdl = new DataLine(9, 86, "32*");
         $this->assertSame(54, $wdl->spread());
 
-        $wdl = new WeatherDataLine(17, "81*", 57);
+        $wdl = new DataLine(17, "81*", 57);
         $this->assertSame(24, $wdl->spread());
     }
 
@@ -47,7 +47,7 @@ class WeatherDataLineTest extends TestCase
      */
     public function testSpreadWithEqualTemperatures(): void
     {
-        $weatherDataLine = new WeatherDataLine(1, 20, 20);
+        $weatherDataLine = new DataLine(1, 20, 20);
         $this->assertSame(0, $weatherDataLine->spread());
     }
 
@@ -58,7 +58,7 @@ class WeatherDataLineTest extends TestCase
     public function testSpreadWithMaxTemperatureBellowMinimumTemperature(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $weatherDataLine = new WeatherDataLine(1, 15, 20); // max < min
+        $weatherDataLine = new DataLine(1, 15, 20); // max < min
         $weatherDataLine->spread();
     }
 
@@ -69,7 +69,7 @@ class WeatherDataLineTest extends TestCase
     public function testSpreadWithInvalidTemperatures(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $weatherDataLine = new WeatherDataLine(1, 'twelve', 0); // max < min
+        $weatherDataLine = new DataLine(1, 'twelve', 0); // max < min
         $weatherDataLine->spread();
     }
 }

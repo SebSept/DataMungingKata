@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace App;
+namespace App\Temperature;
 
 use Closure;
 
-final readonly class WeatherDataTable
+final readonly class DataTable
 {
     /**
-     * @var WeatherDataLine[]
+     * @var DataLine[]
      */
     private array $dataLines;
 
-    public function __construct(WeatherDataLine ...$weatherDataLine)
+    public function __construct(DataLine ...$weatherDataLine)
     {
         $this->dataLines = $weatherDataLine;
     }
