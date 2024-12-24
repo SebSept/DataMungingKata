@@ -1,0 +1,9 @@
+services:
+  php:
+    image: ghcr.io/sebsept/docker-php-symfony-starter:dev
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

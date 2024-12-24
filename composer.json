@@ -1,0 +1,43 @@
+{
+  "name": "sebsept/karatechopkata",
+  "description": "Karate Chop Kata - http://codekata.com/kata/kata02-karate-chop/",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.3.7",
+    "ext-ctype": "*",
+    "ext-iconv": "*"
+  },
+  "require-dev": {
+    "brianium/paratest": "^6.11",
+    "phpunit/phpunit": "^9.6",
+    "rector/rector": "^1.2"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+    },
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "extra": {
+  },
+  "scripts": {
+    "rector": "php vendor/bin/rector",
+    "tests": "php vendor/bin/paratest --runner WrapperRunner"
+  }
+}
