@@ -13,8 +13,8 @@ class TeamTest extends TestCase
      */
     public function testSpreadWithPositiveTemperatures(): void
     {
-        $weatherDataLine = new DayData(1, 30, 20);
-        $this->assertSame(10, $weatherDataLine->spread());
+        $dayData = new DayData(1, 30, 20);
+        $this->assertSame(10, $dayData->spread());
     }
 
     /**
@@ -47,8 +47,8 @@ class TeamTest extends TestCase
      */
     public function testSpreadWithEqualTemperatures(): void
     {
-        $weatherDataLine = new DayData(1, 20, 20);
-        $this->assertSame(0, $weatherDataLine->spread());
+        $dayData = new DayData(1, 20, 20);
+        $this->assertSame(0, $dayData->spread());
     }
 
     /**
@@ -58,8 +58,8 @@ class TeamTest extends TestCase
     public function testSpreadWithMaxTemperatureBellowMinimumTemperature(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $weatherDataLine = new DayData(1, 15, 20); // max < min
-        $weatherDataLine->spread();
+        $dayData = new DayData(1, 15, 20); // max < min
+        $dayData->spread();
     }
 
     /**
@@ -69,7 +69,7 @@ class TeamTest extends TestCase
     public function testSpreadWithInvalidTemperatures(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $weatherDataLine = new DayData(1, 'twelve', 0); // max < min
-        $weatherDataLine->spread();
+        $dayData = new DayData(1, 'twelve', 0); // max < min
+        $dayData->spread();
     }
 }

@@ -14,7 +14,8 @@ class TemperatureMungingTest extends TestCase
      */
     public function testMinimalTemperatureSpreadDay(): void
     {
-        $dataMunging = new Munging(MonthDataFactory::fromFile(__DIR__ . '/stubs/weather.dat'));
+        $monthDataFactory = new MonthDataFactory();
+        $dataMunging = new Munging($monthDataFactory->fromFile(__DIR__ . '/stubs/weather.dat'));
         $this->assertSame(14, $dataMunging->minimalTemperatureSpreadDay());
     }
 }

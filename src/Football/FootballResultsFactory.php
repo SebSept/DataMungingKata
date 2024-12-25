@@ -2,43 +2,17 @@
 
 namespace App\Football;
 
-final class FootballResultsFactory
+use App\Common\CollectionFactory;
+
+final class FootballResultsFactory extends CollectionFactory
 {
-    public const string SEPARATOR = ' ';
-
-    public static function fromArray(array $data): ResultsCollection
+    public function __construct()
     {
-        $dataLines = self::removeNonDataLines($data);
+        $filterDataLines = fn(array $line): bool => count($line) === 10;
+        $itemInstanciation = fn(array $dataLine): Team => new Team($dataLine[1], (int)$dataLine[6], (int)$dataLine[8]);
 
-        return new ResultsCollection(
-            array_map(
-                fn(array $dataLine): Team => new Team($dataLine[1], (int)$dataLine[6], (int)$dataLine[8]),
-                $dataLines),
-            Team::class
-        );
+        parent::__construct($filterDataLines, $itemInstanciation, Team::class);
     }
 
-    public static function fromFile(string $filePath): ResultsCollection
-    {
-        $fileStream = fopen($filePath, 'r');
-        $lines = [];
-        while ($CSVLine = fgetcsv($fileStream, separator: self::SEPARATOR, escape: '')) {
-            $lines[] = $CSVLine;
-        }
-
-        return self::fromArray($lines);
-    }
-
-    public static function removeNonDataLines(array $data): array
-    {
-        // remove empty fields
-        $dataLines = array_map(array_filter(...), $data);
-        // reset array keys
-        $dataLines = array_map(array_values(...), $dataLines);
-
-        // keep only day data lines
-        // - 10 fields
-        return array_filter($dataLines, fn(array $line): bool => count($line) === 10);
-    }
 
 }

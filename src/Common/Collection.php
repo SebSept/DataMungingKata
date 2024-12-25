@@ -2,13 +2,12 @@
 
 namespace App\Common;
 
-use App\Football\Team;
 use Closure;
 
 /**
  * @template T
  */
-readonly abstract class Collection
+readonly class Collection
 {
     /**
      * @var T[]
@@ -19,9 +18,9 @@ readonly abstract class Collection
      * @param $items
      * @param class-string<T> $className
      */
-    public function __construct($items, string $className)
+    public function __construct(array $items, string $className)
     {
-        array_walk($items, fn($item) => assert($item instanceof $className));
+        array_walk($items, fn($item): bool => assert($item instanceof $className, 'item expected to be an instance of ' . $className.' but it is '.$item::class));
 
         $this->items = $items;
     }

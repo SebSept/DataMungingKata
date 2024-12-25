@@ -3,7 +3,6 @@
 namespace App\Football;
 
 use App\Common\Collection;
-use Closure;
 
 /**
  * @implements Collection<Team>

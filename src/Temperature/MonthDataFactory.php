@@ -2,44 +2,16 @@
 
 namespace App\Temperature;
 
-final class MonthDataFactory
+use App\Common\CollectionFactory;
+
+final class MonthDataFactory extends CollectionFactory
 {
-    public const string SEPARATOR = ' ';
-
-    public static function fromArray(array $data): MonthData
+    public function __construct()
     {
-        // remove empty fields
-        $dataLines = array_map(array_filter(...), $data);
-        $dataLines = array_map(array_values(...), $dataLines);
+        $firstColIsANumberBetween1and30 = fn($line): bool => preg_match('/[1-3]?\d/', (string) $line[0] ) === 1;
+        $itemInstanciation = fn(array $line): DayData => new DayData((int)$line[0], $line[1], $line[2]);
 
-        // keep only day data lines
-        // - at least 3 fields
-        $dataLines = array_filter($dataLines, fn(array $line): bool => count($line) >= 3);
-        // - first number between 1 and 30
-        $number_between_1_and_30 = fn($col): bool => preg_match('/[1-3]?\d/', (string) $col ) === 1;
-        $dataLines = array_filter($dataLines,
-            fn(array $line): bool => $number_between_1_and_30($line[0])
-        );
-
-        return new MonthData(
-            array_map(
-                fn(array $dataLine): DayData =>
-                    //                    var_dump($dataLine);
-                    new DayData((int)$dataLine[0], $dataLine[1], $dataLine[2]),
-        $dataLines),
-            DayData::class
-        );
-    }
-
-    public static function fromFile(string $filePath): MonthData
-    {
-        $fileStream = fopen($filePath, 'r');
-        $lines = [];
-        while($CSVLine = fgetcsv($fileStream, separator: self::SEPARATOR, escape: '')) {
-            $lines[] = $CSVLine;
-        }
-
-        return self::fromArray($lines);
+        parent::__construct($firstColIsANumberBetween1and30, $itemInstanciation, DayData::class);
     }
 
 }
