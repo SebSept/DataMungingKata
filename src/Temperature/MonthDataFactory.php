@@ -2,11 +2,11 @@
 
 namespace App\Temperature;
 
-final class DataTableFactory
+final class MonthDataFactory
 {
     public const string SEPARATOR = ' ';
 
-    public static function fromArray(array $data): DataTable
+    public static function fromArray(array $data): MonthData
     {
         // remove empty fields
         $dataLines = array_map(array_filter(...), $data);
@@ -21,16 +21,17 @@ final class DataTableFactory
             fn(array $line): bool => $number_between_1_and_30($line[0])
         );
 
-        return new DataTable(
-            ...array_map(
-                fn(array $dataLine): DataLine =>
+        return new MonthData(
+            array_map(
+                fn(array $dataLine): DayData =>
                     //                    var_dump($dataLine);
-                    new DataLine((int)$dataLine[0], $dataLine[1], $dataLine[2]),
-        $dataLines)
+                    new DayData((int)$dataLine[0], $dataLine[1], $dataLine[2]),
+        $dataLines),
+            DayData::class
         );
     }
 
-    public static function fromFile(string $filePath): DataTable
+    public static function fromFile(string $filePath): MonthData
     {
         $fileStream = fopen($filePath, 'r');
         $lines = [];

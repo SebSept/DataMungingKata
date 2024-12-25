@@ -9,7 +9,7 @@ namespace App\Temperature;
 readonly class Munging
 {
     public function __construct(
-        private DataTable $weatherDataTable)
+        private MonthData $weatherDataTable)
     {
     }
 
@@ -19,7 +19,7 @@ readonly class Munging
     public function minimalTemperatureSpreadDay(): int
     {
         $weatherDataLineWithMaxSpread =  $this->weatherDataTable->reduce(
-            fn(?DataLine $dataLineWithMaximumSpread, DataLine $dataLine): DataLine => is_null($dataLineWithMaximumSpread) || $dataLine->spread() < $dataLineWithMaximumSpread->spread()
+            fn(?DayData $dataLineWithMaximumSpread, DayData $dataLine): DayData => is_null($dataLineWithMaximumSpread) || $dataLine->spread() < $dataLineWithMaximumSpread->spread()
                 ? $dataLine
                 : $dataLineWithMaximumSpread);
 

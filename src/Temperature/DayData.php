@@ -4,7 +4,7 @@ namespace App\Temperature;
 
 use InvalidArgumentException;
 
-readonly class DataLine
+readonly class DayData
 {
     public int $maxTemperature;
 

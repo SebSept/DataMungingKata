@@ -6,18 +6,19 @@ final class FootballResultsFactory
 {
     public const string SEPARATOR = ' ';
 
-    public static function fromArray(array $data): Results
+    public static function fromArray(array $data): ResultsCollection
     {
         $dataLines = self::removeNonDataLines($data);
 
-        return new Results(
-            ...array_map(
+        return new ResultsCollection(
+            array_map(
                 fn(array $dataLine): Team => new Team($dataLine[1], (int)$dataLine[6], (int)$dataLine[8]),
-                $dataLines)
+                $dataLines),
+            Team::class
         );
     }
 
-    public static function fromFile(string $filePath): Results
+    public static function fromFile(string $filePath): ResultsCollection
     {
         $fileStream = fopen($filePath, 'r');
         $lines = [];

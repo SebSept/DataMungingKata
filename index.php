@@ -2,12 +2,12 @@
 
 use App\Football\Munging as FootballMunging;
 use App\Temperature\Munging;
-use App\Temperature\DataTableFactory;
+use App\Temperature\MonthDataFactory;
 use App\Football\FootballResultsFactory;
 
 require_once 'vendor/autoload.php';
 
-$processor = new Munging(DataTableFactory::fromFile(__DIR__ . '/data/weather.dat'));
+$processor = new Munging(MonthDataFactory::fromFile(__DIR__ . '/data/weather.dat'));
 echo "jour avec le plus petit écart min-max : " . $processor->minimalTemperatureSpreadDay();
 
 echo PHP_EOL.PHP_EOL;

@@ -9,7 +9,7 @@ namespace App\Football;
 readonly class Munging
 {
     public function __construct(
-        private Results $results)
+        private ResultsCollection $results)
     {
     }
 
