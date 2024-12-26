@@ -21,7 +21,7 @@ readonly class Collection
      */
     public function __construct(array $items, string $className)
     {
-        array_walk($items, fn($item): bool => assert($item instanceof $className, 'item expected to be an instance of ' . $className.' but it is '.(is_object($item) ? get_class($item) : gettype($item))));
+        array_walk($items, fn($item): bool => assert($item instanceof $className, 'item expected to be an instance of ' . $className.' but it is '.(get_debug_type($item))));
 
         $this->items = $items;
     }
@@ -32,7 +32,7 @@ readonly class Collection
      */
     public function reduce(Closure $reduceFunction)
     {
-        assert(!empty($this->items));
+        assert($this->items !== []);
 
         $result = array_reduce($this->items, $reduceFunction);
         if(is_null($result)) {

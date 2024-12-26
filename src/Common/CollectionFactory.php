@@ -21,13 +21,12 @@ abstract class CollectionFactory
     }
 
     /**
-     * @param string $filePath
      * @return Collection<T>
      */
     public function fromFile(string $filePath): Collection
     {
         $fileStream = fopen($filePath, 'r');
-        assert(is_resource($fileStream), "failed to open $filePath");
+        assert(is_resource($fileStream), 'failed to open ' . $filePath);
         $lines = [];
         while ($CSVLine = fgetcsv($fileStream, separator: self::SEPARATOR, escape: '')) {
             $lines[] = $CSVLine;
@@ -44,7 +43,6 @@ abstract class CollectionFactory
     {
         $lines = array_filter($this->removeEmptyFields($lines), $this->filterDataLines);
 
-        /** @var Collection<T> */
         return new Collection(
             array_map($this->itemInstanciation, $lines),
             $this->className

@@ -21,11 +21,11 @@ readonly class Munging
      */
     public function minimalTemperatureSpreadDay(): int
     {
-        $weatherDataLineWithMaxSpread =  $this->collection->reduce(
+        $dayData =  $this->collection->reduce(
             fn(?DayData $dayWithMaxSpread, DayData $day): DayData => is_null($dayWithMaxSpread) || $day->spread() < $dayWithMaxSpread->spread()
                 ? $day
                 : $dayWithMaxSpread);
 
-        return $weatherDataLineWithMaxSpread->day;
+        return $dayData->day;
     }
 }
