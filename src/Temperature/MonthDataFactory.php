@@ -4,6 +4,9 @@ namespace App\Temperature;
 
 use App\Common\CollectionFactory;
 
+/**
+ * @extends CollectionFactory<DayData>
+ */
 final class MonthDataFactory extends CollectionFactory
 {
     public function __construct()

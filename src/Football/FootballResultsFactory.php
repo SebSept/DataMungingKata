@@ -4,6 +4,9 @@ namespace App\Football;
 
 use App\Common\CollectionFactory;
 
+/**
+ * @extends CollectionFactory<Team>
+ */
 final class FootballResultsFactory extends CollectionFactory
 {
     public function __construct()

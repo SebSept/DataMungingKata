@@ -1,9 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Common;
 
 use Closure;
 
+/**
+ * @template T
+ */
 abstract class CollectionFactory
 {
     public const string SEPARATOR = ' ';
@@ -11,14 +14,20 @@ abstract class CollectionFactory
     public function __construct(
         private readonly Closure $filterDataLines,
         private readonly Closure $itemInstanciation,
+        /** @var class-string T */
         private readonly string  $className,
     )
     {
     }
 
-    public function fromFile(string $filePath)
+    /**
+     * @param string $filePath
+     * @return Collection<T>
+     */
+    public function fromFile(string $filePath): Collection
     {
         $fileStream = fopen($filePath, 'r');
+        assert(is_resource($fileStream), "failed to open $filePath");
         $lines = [];
         while ($CSVLine = fgetcsv($fileStream, separator: self::SEPARATOR, escape: '')) {
             $lines[] = $CSVLine;
@@ -27,17 +36,26 @@ abstract class CollectionFactory
         return $this->fromArray($lines);
     }
 
+    /**
+     * @param array<int, array<int, string>> $lines
+     * @return Collection<T>
+     */
     private function fromArray(array $lines): Collection
     {
         $lines = array_filter($this->removeEmptyFields($lines), $this->filterDataLines);
 
+        /** @var Collection<T> */
         return new Collection(
             array_map($this->itemInstanciation, $lines),
             $this->className
         );
     }
 
-    public function removeEmptyFields(array $lines): array
+    /**
+     * @param array<int, array<int, string>> $lines
+     * @return array<int, array<int, string>>
+     */
+    private function removeEmptyFields(array $lines): array
     {
         // remove empty fields on each line
         $lines = array_map(array_filter(...), $lines);

@@ -5,7 +5,7 @@ namespace App\Temperature;
 use App\Common\Collection;
 
 /**
- * @implements Collection<DayData>
+ * @extends Collection<DayData>
  */
 final readonly class MonthData extends Collection
 {

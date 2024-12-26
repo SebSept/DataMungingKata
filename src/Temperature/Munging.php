@@ -11,6 +11,7 @@ use App\Common\Collection;
 readonly class Munging
 {
     public function __construct(
+        /** @var Collection<DayData> */
         private Collection $collection)
     {
     }
@@ -21,9 +22,9 @@ readonly class Munging
     public function minimalTemperatureSpreadDay(): int
     {
         $weatherDataLineWithMaxSpread =  $this->collection->reduce(
-            fn(?DayData $dataLineWithMaximumSpread, DayData $dataLine): DayData => is_null($dataLineWithMaximumSpread) || $dataLine->spread() < $dataLineWithMaximumSpread->spread()
-                ? $dataLine
-                : $dataLineWithMaximumSpread);
+            fn(?DayData $dayWithMaxSpread, DayData $day): DayData => is_null($dayWithMaxSpread) || $day->spread() < $dayWithMaxSpread->spread()
+                ? $day
+                : $dayWithMaxSpread);
 
         return $weatherDataLineWithMaxSpread->day;
     }

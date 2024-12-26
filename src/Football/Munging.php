@@ -11,6 +11,7 @@ use App\Common\Collection;
 readonly class Munging
 {
     public function __construct(
+        /** @var Collection<Team> */
         private Collection $collection)
     {
     }
