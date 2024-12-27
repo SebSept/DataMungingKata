@@ -6,7 +6,7 @@ use Override;
 use App\Common\CollectionFactory;
 
 /**
- * @extends CollectionFactory<DayData>
+ * @extends CollectionFactory<DayData, DayCollection>
  */
 final class DayCollectionFactory extends CollectionFactory
 {

@@ -6,6 +6,7 @@ use Closure;
 
 /**
  * @template T
+ * @template TCollection of CollectionInterface
  */
 abstract class CollectionFactory
 {
@@ -18,6 +19,9 @@ abstract class CollectionFactory
     {
     }
 
+    /**
+     * @return TCollection
+     */
     public function fromFile(string $filePath): CollectionInterface
     {
         $fileStream = fopen($filePath, 'r');
@@ -32,6 +36,7 @@ abstract class CollectionFactory
 
     /**
      * @param array<int, array<int, string>> $lines
+     * @return TCollection
      */
     private function fromArray(array $lines): CollectionInterface
     {
@@ -56,6 +61,7 @@ abstract class CollectionFactory
 
     /**
      * @param T[] $items
+     * @return TCollection
      */
     abstract protected function createCollection(array $items): CollectionInterface;
 

@@ -6,7 +6,7 @@ use Override;
 use App\Common\CollectionFactory;
 
 /**
- * @extends CollectionFactory<Team>
+ * @extends CollectionFactory<Team, TeamCollection>
  */
 final class TeamCollectionFactory extends CollectionFactory
 {
