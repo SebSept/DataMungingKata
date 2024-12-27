@@ -2,7 +2,7 @@
 
 namespace App\Tests\Football;
 
-use App\Football\FootballResultsFactory;
+use App\Football\TeamCollectionFactory;
 use App\Football\Munging;
 use PHPUnit\Framework\TestCase;
 
@@ -11,8 +11,8 @@ class FootballMungingTest extends TestCase
 
     public function testTeamWithBestGoalAverage(): void
     {
-        $footballResultsFactory = new FootballResultsFactory();
-        $dataMunging = new Munging($footballResultsFactory->fromFile(__DIR__ . '/stubs/football.dat'));
+        $teamCollectionFactory = new TeamCollectionFactory();
+        $dataMunging = new Munging($teamCollectionFactory->fromFile(__DIR__ . '/stubs/football.dat'));
 
         $this->assertSame('Arsenal', $dataMunging->teamWithBestGoalAverage()->name);
         $this->assertSame(79, $dataMunging->teamWithBestGoalAverage()->for);
@@ -22,8 +22,8 @@ class FootballMungingTest extends TestCase
 
     public function testTeamWithBestGoalAverage2(): void
     {
-        $footballResultsFactory = new FootballResultsFactory();
-        $dataMunging = new Munging($footballResultsFactory->fromFile(__DIR__ . '/stubs/football2.dat'));
+        $teamCollectionFactory = new TeamCollectionFactory();
+        $dataMunging = new Munging($teamCollectionFactory->fromFile(__DIR__ . '/stubs/football2.dat'));
 
         $this->assertSame('Arsenal', $dataMunging->teamWithBestGoalAverage()->name);
         $this->assertSame(80, $dataMunging->teamWithBestGoalAverage()->for);

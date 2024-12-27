@@ -3,7 +3,7 @@
 namespace App\Tests\Temperature;
 
 use App\Temperature\Munging;
-use App\Temperature\MonthDataFactory;
+use App\Temperature\DayCollectionFactory;
 use PHPUnit\Framework\TestCase;
 
 class TemperatureMungingTest extends TestCase
@@ -14,8 +14,8 @@ class TemperatureMungingTest extends TestCase
      */
     public function testMinimalTemperatureSpreadDay(): void
     {
-        $monthDataFactory = new MonthDataFactory();
-        $dataMunging = new Munging($monthDataFactory->fromFile(__DIR__ . '/stubs/weather.dat'));
+        $dayCollectionFactory = new DayCollectionFactory();
+        $dataMunging = new Munging($dayCollectionFactory->fromFile(__DIR__ . '/stubs/weather.dat'));
         $this->assertSame(14, $dataMunging->minimalTemperatureSpreadDay());
     }
 }

@@ -3,16 +3,13 @@ declare(strict_types=1);
 
 namespace App\Temperature;
 
-use App\Common\Collection;
-
 /**
  * @see http://codekata.com/kata/kata04-data-munging/
  */
 readonly class Munging
 {
     public function __construct(
-        /** @var Collection<DayData> */
-        private Collection $collection)
+        private DayCollection $dayCollection)
     {
     }
 
@@ -21,7 +18,7 @@ readonly class Munging
      */
     public function minimalTemperatureSpreadDay(): int
     {
-        $dayData =  $this->collection->reduce(
+        $dayData =  $this->dayCollection->reduce(
             fn(?DayData $dayWithMaxSpread, DayData $day): DayData => is_null($dayWithMaxSpread) || $day->spread() < $dayWithMaxSpread->spread()
                 ? $day
                 : $dayWithMaxSpread);

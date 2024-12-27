@@ -14,16 +14,11 @@ abstract class CollectionFactory
     public function __construct(
         private readonly Closure $filterDataLines,
         private readonly Closure $itemInstanciation,
-        /** @var class-string T */
-        private readonly string  $className,
     )
     {
     }
 
-    /**
-     * @return Collection<T>
-     */
-    public function fromFile(string $filePath): Collection
+    public function fromFile(string $filePath): CollectionInterface
     {
         $fileStream = fopen($filePath, 'r');
         assert(is_resource($fileStream), 'failed to open ' . $filePath);
@@ -37,15 +32,13 @@ abstract class CollectionFactory
 
     /**
      * @param array<int, array<int, string>> $lines
-     * @return Collection<T>
      */
-    private function fromArray(array $lines): Collection
+    private function fromArray(array $lines): CollectionInterface
     {
         $lines = array_filter($this->removeEmptyFields($lines), $this->filterDataLines);
 
-        return new Collection(
+        return $this->createCollection(
             array_map($this->itemInstanciation, $lines),
-            $this->className
         );
     }
 
@@ -60,5 +53,10 @@ abstract class CollectionFactory
         // and reset array keys
         return array_map(array_values(...), $lines);
     }
+
+    /**
+     * @param T[] $items
+     */
+    abstract protected function createCollection(array $items): CollectionInterface;
 
 }

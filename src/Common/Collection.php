@@ -8,7 +8,7 @@ use InvalidArgumentException;
 /**
  * @template T
  */
-readonly class Collection
+abstract readonly class Collection
 {
     /**
      * @var T[]
