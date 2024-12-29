@@ -1,5 +1,3 @@
-# Karaté Chop Kata
+# DataMunging Kata
 
-Spec : http://codekata.com/kata/kata02-karate-chop/
-
-Short version : https://github.com/SebSept/KarateChopKata/tree/dev-short-version
+Spec : http://codekata.com/kata/kata04-data-munging/
