@@ -55,6 +55,8 @@ abstract class CollectionFactory
     {
         // remove empty fields on each line
         $lines = array_map(array_filter(...), $lines);
+        // remove empty lines
+        $lines = array_filter($lines);
         // and reset array keys
         return array_map(array_values(...), $lines);
     }

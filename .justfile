@@ -3,7 +3,7 @@ docker_php_exec := "docker compose exec -it php"
 composer := docker_php_exec + " composer "
 
 up:
-    docker pull
+    docker compose pull
     docker compose up --detach --remove-orphans --build
 
 # update source files + docker compose down+up
@@ -38,6 +38,18 @@ run_xdebug:
 # interactive php shell
 psysh:
     {{docker_php_exec}} psysh
+
+phpstan:
+    {{docker_php_exec}} phpstan analyse src --level max
+
+cs-fix:
+    {{docker_php_exec}} php-cs-fixer fix src
+
+rector:
+    {{docker_php_exec}} vendor/bin/rector
+
+# csfix + rector + phpstan + phpunit
+lint: cs-fix rector phpstan tests
 
 # firt run docker compose up + composer install + open browser
 [private]

@@ -7,11 +7,12 @@ use App\Temperature\DayCollectionFactory;
 use App\Football\TeamCollectionFactory;
 
 require_once 'vendor/autoload.php';
-
-$processor = new Munging(DayCollectionFactory::fromFile(__DIR__ . '/data/weather.dat'));
+$days = (new DayCollectionFactory())->fromFile(__DIR__ . '/data/weather.dat');
+$processor = new Munging($days);
 echo "jour avec le plus petit écart min-max : " . $processor->minimalTemperatureSpreadDay();
 
 echo PHP_EOL.PHP_EOL;
-$processor = new FootballMunging(CollectionFactory::fromFile(__DIR__ . '/data/football.dat'));
+$teams = (new TeamCollectionFactory())->fromFile(__DIR__ . '/data/football.dat');
+$processor = new FootballMunging($teams);
 $team = $processor->teamWithBestGoalAverage();
 echo "Equipe avec le meilleur écart de but marqués/encaissés " . $team->name . " écart : " . $team->goalAverage();
